@@ -7,9 +7,10 @@ import Dashboard from "./screens/Dashboard";
 import UploadImage from "./screens/UploadImage";
 import ReportResults from "./screens/ReportResults";
 import AddPatient from "./screens/AddPatient";
-
+import Patients from "./screens/Patients";
+import FAQ from "./screens/FAQ";
+import Feedback from "./screens/Feedback";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
 
 const App = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
@@ -35,12 +36,29 @@ const App = () => {
       <NavigationContainer>
         {hideSplashScreen ? (
           <Stack.Navigator
-            initialRouteName="LoginPage"
+            initialRouteName="Dashboard"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen
               name="LoginPage"
               component={LoginPage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Feedback"
+              component={Feedback}
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="FAQPage"
+              component={FAQ}
+              options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="Patients"
+              component={Patients}
               options={{ headerShown: false }}
             />
             <Stack.Screen

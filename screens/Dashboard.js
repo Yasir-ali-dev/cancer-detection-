@@ -9,7 +9,7 @@ const Dashboard = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.dashboard}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Pressable
         style={[styles.addPatient, styles.reportChildLayout]}
         onPress={() => navigation.navigate("AddPatient")}
@@ -31,6 +31,7 @@ const Dashboard = () => {
           source={require("../assets/report-img.png")}
         />
       </View>
+
       <View style={[styles.feedback, styles.reportChildLayout]}>
         <View style={[styles.feedbackChild, styles.childShadowBox1]} />
         <Text style={[styles.feedBack, styles.reportsTypo]}>Feed Back</Text>
@@ -40,6 +41,7 @@ const Dashboard = () => {
           source={require("../assets/feedback-img.png")}
         />
       </View>
+
       <View style={[styles.managePatients, styles.manageLayout]}>
         <View style={[styles.managePatientsChild, styles.manageLayout]} />
         <Image
@@ -51,17 +53,21 @@ const Dashboard = () => {
           Manage Patients Details
         </Text>
       </View>
+
       <View style={[styles.education, styles.educationPosition]}>
-        <View style={[styles.educationChild, styles.childShadowBox]} />
-        <Text style={[styles.educationResources, styles.resultsSummaryTypo]}>
-          Education Resources
-        </Text>
-        <Image
-          style={[styles.educationImgIcon, styles.imgIconLayout]}
-          contentFit="cover"
-          source={require("../assets/educationimg.png")}
-        />
+        <Pressable onPress={() => navigation.navigate("FAQPage")}>
+          <View style={[styles.educationChild, styles.childShadowBox]} />
+          <Text style={[styles.educationResources, styles.resultsSummaryTypo]}>
+            Education Resources
+          </Text>
+          <Image
+            style={[styles.educationImgIcon, styles.imgIconLayout]}
+            contentFit="cover"
+            source={require("../assets/educationimg.png")}
+          />
+        </Pressable>
       </View>
+
       <View style={[styles.results, styles.manageLayout]}>
         <View style={[styles.resultsChild, styles.childShadowBox]} />
         <Image
@@ -73,6 +79,7 @@ const Dashboard = () => {
           Results Summary
         </Text>
       </View>
+
       <Pressable
         style={[styles.capture, styles.captureLayout]}
         onPress={() => navigation.navigate("UploadImage")}
@@ -88,17 +95,20 @@ const Dashboard = () => {
         </Text>
       </Pressable>
       <ProfileContainer />
+
       <Image
         style={styles.skinaccuracyRemovebgPreviewIcon}
         contentFit="cover"
         source={require("../assets/skinaccuracyremovebgpreview-1.png")}
       />
+
       <View style={[styles.header, styles.headerPosition]}>
         <View style={[styles.headerChild, styles.headerPosition]} />
         <Text style={[styles.dermdetect, styles.dermdetectFlexBox]}>
           DermDetect
         </Text>
       </View>
+
       <Image
         style={styles.vectorIcon}
         contentFit="cover"
@@ -127,7 +137,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   reportsTypo: {
-    top: 69,
+    top: 72,
     textAlign: "left",
     color: Color.colorDimgray,
     fontFamily: FontFamily.poppinsSemiBold,
@@ -136,7 +146,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   manageLayout: {
-    width: 320,
+    width: 344,
     height: 60,
   },
   imgIconPosition: {
@@ -149,12 +159,12 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   educationPosition: {
-    left: 20,
+    left: 22,
     position: "absolute",
   },
   childShadowBox: {
     backgroundColor: Color.colorMidnightblue_100,
-    width: 320,
+    width: 344,
     shadowOpacity: 1,
     elevation: 2,
     shadowRadius: 2,
@@ -183,7 +193,7 @@ const styles = StyleSheet.create({
   },
   captureLayout: {
     height: 83,
-    width: 344,
+    width: 345,
     position: "absolute",
   },
   dermdetectFlexBox: {
@@ -191,14 +201,14 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   headerPosition: {
-    top: "0%",
+    top: "2%",
     position: "absolute",
   },
   addPatientChild: {
     backgroundColor: "#fbe77e",
     height: 98,
     position: "absolute",
-    width: 110,
+    width: 113,
   },
   addPatient1: {
     top: 72,
@@ -213,7 +223,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   patientImgIcon: {
-    left: 29,
+    left: 32,
     height: 53,
     width: 52,
     top: 10,
@@ -222,7 +232,7 @@ const styles = StyleSheet.create({
   addPatient: {
     width: 110,
     height: 98,
-    left: 7,
+    left: 22,
     top: 256,
   },
   reportChild: {
@@ -232,19 +242,19 @@ const styles = StyleSheet.create({
     width: 110,
   },
   reports: {
-    left: 33,
+    left: 27,
     width: 73,
     height: 22,
   },
   reportImgIcon: {
-    left: 31,
+    left: 29,
     height: 50,
     width: 52,
-    top: 10,
+    top: 11,
     position: "absolute",
   },
   report: {
-    left: 129,
+    left: 146,
     width: 110,
     height: 98,
     top: 256,
@@ -256,7 +266,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   feedBack: {
-    left: 17,
+    left: 14,
     width: 87,
     height: 23,
   },
@@ -269,7 +279,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   feedback: {
-    left: 248,
+    left: 265,
     width: 104,
     top: 256,
   },
@@ -295,9 +305,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   managePatientsDetails: {
-    top: 22,
+    top: 18,
     width: 226,
-    height: 16,
+    height: 25,
     fontSize: FontSize.size_mid,
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
@@ -308,7 +318,7 @@ const styles = StyleSheet.create({
   managePatients: {
     top: 583,
     height: 60,
-    left: 19,
+    left: 22,
     width: 320,
     position: "absolute",
   },
@@ -316,7 +326,7 @@ const styles = StyleSheet.create({
     height: 59,
   },
   educationResources: {
-    top: 16,
+    top: 18,
     left: 88,
     width: 215,
   },
@@ -328,7 +338,8 @@ const styles = StyleSheet.create({
   education: {
     top: 655,
     height: 60,
-    width: 320,
+    width: 344,
+    left: 22,
   },
   resultsChild: {
     height: 60,
@@ -339,7 +350,7 @@ const styles = StyleSheet.create({
     top: 5,
   },
   resultsSummary: {
-    top: 20,
+    top: 19,
     width: 188,
     left: 89,
     height: 21,
@@ -347,8 +358,8 @@ const styles = StyleSheet.create({
   results: {
     top: 726,
     height: 60,
-    left: 19,
-    width: 320,
+    left: 22,
+    width: 344,
     position: "absolute",
   },
   captureChild: {
@@ -377,13 +388,14 @@ const styles = StyleSheet.create({
     fontSize: FontSize.bodyLargeMedium_size,
     width: 240,
     height: 20,
+
     color: Color.colorDarkslategray_100,
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
   },
   capture: {
     top: 154,
-    left: 7,
+    left: 22,
   },
   skinaccuracyRemovebgPreviewIcon: {
     top: 366,
@@ -401,8 +413,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   dermdetect: {
-    top: 4,
-    left: 85,
+    top: 10,
+    left: 100,
     fontSize: FontSize.size_6xl,
     fontWeight: "700",
     fontFamily: FontFamily.poppinsBold,
@@ -420,7 +432,7 @@ const styles = StyleSheet.create({
   vectorIcon: {
     top: 21,
     left: 34,
-    width: 22,
+    width: 40,
     height: 15,
     display: "none",
     position: "absolute",

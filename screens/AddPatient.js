@@ -93,6 +93,7 @@ const AddPatient = () => {
             value={formData.email}
             onChangeText={(text) => handleChange("email", text)}
             placeholder="Enter Patient Email"
+            
           />
         </View>
         <View>

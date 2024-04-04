@@ -3,9 +3,31 @@ import { Image } from "expo-image";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontSize, FontFamily, Border } from "../GlobalStyles";
+import axios from "axios";
 
 const ReportResults = () => {
   const navigation = useNavigation();
+
+  const getData = async () => {
+    try {
+      const response = await fetch(
+        "http://10.102.138.63:4000/reports/:65d1e7480bf1216222942221"
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log("df");
+
+  React.useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <View style={styles.reportResults}>
