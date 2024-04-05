@@ -1,9 +1,11 @@
 import * as React from "react";
 import { Image } from "expo-image";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Color, FontSize, FontFamily, Border, Padding } from "../GlobalStyles";
+import { useNavigation } from "@react-navigation/core";
 
 const ProfileContainer = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.topFrame}>
       <View style={styles.nameFrame}>
@@ -17,13 +19,15 @@ const ProfileContainer = () => {
         >{`Dilshad Hussain +92 3052016666 `}</Text>
       </View>
       <View style={[styles.ellipseParent, styles.groupChildLayout]}>
-        <Image
-          style={[styles.groupChild, styles.groupChildLayout]}
-          contentFit="cover"
-          source={require("../assets/ellipse-5.png")}
-        />
-        <Text style={[styles.text, styles.textClr]}>?</Text>
-        <Text style={[styles.help, styles.textClr]}>Help</Text>
+        <Pressable onPress={() => navigation.navigate("FAQPage")}>
+          <Image
+            style={[styles.groupChild, styles.groupChildLayout]}
+            contentFit="cover"
+            source={require("../assets/ellipse-5.png")}
+          />
+          <Text style={[styles.text, styles.textClr]}>?</Text>
+          <Text style={[styles.help, styles.textClr]}>Help</Text>
+        </Pressable>
       </View>
       <View style={styles.helpFrame} />
     </View>
@@ -32,8 +36,8 @@ const ProfileContainer = () => {
 
 const styles = StyleSheet.create({
   groupChildLayout: {
-    width: 63,
-    height: 52,
+    width: 65,
+    height: 65,
   },
   textClr: {
     color: Color.secondarySRedLight,
@@ -55,13 +59,13 @@ const styles = StyleSheet.create({
   nameFrame: {
     borderRadius: Border.br_lg,
     backgroundColor: Color.colorFuchsia,
-    width: 205,
+    width: 265,
     alignItems: "center",
     paddingLeft: Padding.p_7xs,
     paddingTop: Padding.p_7xs,
     paddingRight: Padding.p_xs,
     paddingBottom: Padding.p_7xs,
-    height: 52,
+    height: 60,
     flexDirection: "row",
   },
   groupChild: {
@@ -69,21 +73,21 @@ const styles = StyleSheet.create({
     left: 0,
     opacity: 0.05,
     position: "absolute",
-    width: 63,
+    width: 70,
   },
   text: {
-    top: 8,
+    top: 3,
     left: 25,
     fontSize: FontSize.size_5xl,
     letterSpacing: 2.4,
-    width: 15,
-    height: 26,
+    width: 20,
+    height: 30,
     fontFamily: FontFamily.poppinsRegular,
     color: Color.secondarySRedLight,
   },
   help: {
-    top: 32,
-    left: 18,
+    top: 38,
+    left: 20,
     fontSize: FontSize.size_3xs,
     letterSpacing: 1,
     lineHeight: 10,
@@ -93,16 +97,16 @@ const styles = StyleSheet.create({
     height: 12,
   },
   ellipseParent: {
-    marginLeft: 60,
+    marginLeft: 20,
   },
   helpFrame: {
     width: 66,
-    marginLeft: 60,
-    height: 66,
+    marginLeft: 100,
+    height: 76,
   },
   topFrame: {
-    top: 68,
-    left: 12,
+    top: 81,
+    left: 22,
     width: 334,
     flexDirection: "row",
     height: 66,

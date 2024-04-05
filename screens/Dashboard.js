@@ -4,9 +4,26 @@ import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import ProfileContainer from "../components/ProfileContainer";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
+import { PieChart, LineChart } from "react-native-gifted-charts";
 
 const Dashboard = () => {
   const navigation = useNavigation();
+  const pieData = [
+    { value: 54, color: "#177AD5" },
+    { value: 40, color: "#79D2DE" },
+    { value: 20, color: "#ED6665", shiftX: 28, shiftY: -18 },
+  ];
+
+  const lineData = [
+    { value: 0 },
+    { value: 10 },
+    { value: 8 },
+    { value: 58 },
+    { value: 56 },
+    { value: 78 },
+    { value: 74 },
+    { value: 98 },
+  ];
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -22,7 +39,10 @@ const Dashboard = () => {
           source={require("../assets/patient-img.png")}
         />
       </Pressable>
-      <View style={[styles.report, styles.reportChildLayout]}>
+      <Pressable
+        style={[styles.report, styles.reportChildLayout]}
+        onPress={() => navigation.navigate("ReportResults")}
+      >
         <View style={[styles.reportChild, styles.childShadowBox1]} />
         <Text style={[styles.reports, styles.reportsTypo]}>Reports</Text>
         <Image
@@ -30,7 +50,7 @@ const Dashboard = () => {
           contentFit="cover"
           source={require("../assets/report-img.png")}
         />
-      </View>
+      </Pressable>
 
       <View style={[styles.feedback, styles.reportChildLayout]}>
         <View style={[styles.feedbackChild, styles.childShadowBox1]} />
@@ -55,17 +75,15 @@ const Dashboard = () => {
       </View>
 
       <View style={[styles.education, styles.educationPosition]}>
-        <Pressable onPress={() => navigation.navigate("FAQPage")}>
-          <View style={[styles.educationChild, styles.childShadowBox]} />
-          <Text style={[styles.educationResources, styles.resultsSummaryTypo]}>
-            Education Resources
-          </Text>
-          <Image
-            style={[styles.educationImgIcon, styles.imgIconLayout]}
-            contentFit="cover"
-            source={require("../assets/educationimg.png")}
-          />
-        </Pressable>
+        <View style={[styles.educationChild, styles.childShadowBox]} />
+        <Text style={[styles.educationResources, styles.resultsSummaryTypo]}>
+          Education Resources
+        </Text>
+        <Image
+          style={[styles.educationImgIcon, styles.imgIconLayout]}
+          contentFit="cover"
+          source={require("../assets/educationimg.png")}
+        />
       </View>
 
       <View style={[styles.results, styles.manageLayout]}>
@@ -96,11 +114,46 @@ const Dashboard = () => {
       </Pressable>
       <ProfileContainer />
 
-      <Image
-        style={styles.skinaccuracyRemovebgPreviewIcon}
-        contentFit="cover"
-        source={require("../assets/skinaccuracyremovebgpreview-1.png")}
-      />
+      <View style={styles.skinaccuracyRemovebgPreviewIcon}>
+        {/* <View style={{ width: 100 }}>
+          <PieChart
+            data={pieData}
+            showText
+            showValuesAsLabels
+            showTextBackground
+            textBackgroundColor="#333"
+            textBackgroundRadius={22}
+            textColor="white"
+            fontWeight="bold"
+            strokeWidth={1}
+            strokeColor="#333"
+            innerCircleBorderWidth={1}
+            innerCircleBorderColor="#333"
+            showGradient
+          />
+        </View> */}
+        <View>
+          <LineChart
+            areaChart
+            curved
+            data={lineData}
+            height={190}
+            showVerticalLines
+            spacing={40}
+            initialSpacing={0}
+            color1="skyblue"
+            color2="orange"
+            textColor1="green"
+            hideDataPoints
+            dataPointsColor1="blue"
+            dataPointsColor2="red"
+            startFillColor1="skyblue"
+            startFillColor2="orange"
+            startOpacity={0.8}
+            endOpacity={0.3}
+          />
+        </View>
+      </View>
 
       <View style={[styles.header, styles.headerPosition]}>
         <View style={[styles.headerChild, styles.headerPosition]} />
@@ -201,7 +254,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   headerPosition: {
-    top: "2%",
+    top: "0%",
     position: "absolute",
   },
   addPatientChild: {
@@ -399,13 +452,13 @@ const styles = StyleSheet.create({
   },
   skinaccuracyRemovebgPreviewIcon: {
     top: 366,
-    left: 25,
+    left: 22,
     width: 309,
     height: 205,
     position: "absolute",
   },
   headerChild: {
-    height: "100%",
+    height: "130%",
     right: "0%",
     bottom: "0%",
     left: "0%",
@@ -413,7 +466,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   dermdetect: {
-    top: 10,
+    top: 21,
     left: 100,
     fontSize: FontSize.size_6xl,
     fontWeight: "700",

@@ -1,5 +1,13 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  TextInput,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, Border, FontFamily, FontSize } from "../GlobalStyles";
@@ -11,24 +19,39 @@ const LoginPage = () => {
     <View style={styles.loginPage}>
       <View style={[styles.loginPageChild, styles.loginShadowBox]} />
       <View style={[styles.loginPageItem, styles.loginShadowBox]} />
-      <Text style={[styles.username, styles.usernameTypo]}>username</Text>
-      <Text style={[styles.password, styles.usernameTypo]}>Password</Text>
+      <TextInput
+        style={[styles.username, styles.usernameTypo]}
+        // onChangeText={(text) => handleChange("name", text)}
+        placeholder="Enter username"
+      />
+      <TextInput
+        style={[styles.password, styles.usernameTypo]}
+        // onChangeText={(text) => handleChange("name", text)}
+        placeholder="Enter password"
+      />
       <Text style={[styles.loginToYour, styles.welcomeClr]}>
         Login to your account
-      </Text>
-      <Text style={[styles.forgetPassword, styles.rememberMeTypo]}>
-        Forget Password?
       </Text>
       <Text style={[styles.rememberMe, styles.rememberMeTypo]}>
         Remember me
       </Text>
-      <View style={styles.loginPageInner} />
-      <Pressable
-        style={styles.login}
+      {/* <View  /> */}
+
+      <TouchableOpacity
+        style={[
+          styles.login,
+          {
+            backgroundColor: "#38903B",
+            paddingHorizontal: 133,
+            paddingVertical: 10,
+            borderRadius: 10,
+          },
+        ]}
         onPress={() => navigation.navigate("Dashboard")}
       >
-        <Text style={[styles.login1, styles.login1Typo]}>Login</Text>
-      </Pressable>
+        <Text>Login</Text>
+      </TouchableOpacity>
+
       <Text style={[styles.dontHaveAnContainer, styles.welcomeClr]}>
         <Text style={styles.dontHaveAnTypo}>{`Don't have an account? `}</Text>
         <Text style={styles.login1Typo}>Register</Text>
@@ -121,14 +144,14 @@ const styles = StyleSheet.create({
   },
   username: {
     width: "35%",
-    top: "48.75%",
+    top: "47.95%",
   },
   password: {
     width: "30.83%",
-    top: "56.25%",
+    top: "55.25%",
   },
   loginToYour: {
-    height: "2.38%",
+    height: "3.38%",
     width: "62.22%",
     top: "39%",
     left: "25.28%",
@@ -158,14 +181,14 @@ const styles = StyleSheet.create({
   login1: {
     width: "23.06%",
     fontSize: FontSize.size_5xl,
-    height: "4.5%",
+    height: "2.5%",
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: "500",
-    textAlign: "left",
-    color: Color.othersWhite,
+    textAlign: "center",
+    color: Color.colorBlack,
   },
   login: {
-    left: "40.56%",
+    left: "11.56%",
     top: "84.5%",
     position: "absolute",
   },
@@ -182,7 +205,7 @@ const styles = StyleSheet.create({
     color: Color.colorDarkgreen,
   },
   welcome: {
-    height: "6.5%",
+    height: "8.5%",
     width: "71.67%",
     top: "29.13%",
     left: "19.72%",
