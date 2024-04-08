@@ -10,6 +10,8 @@ import AddPatient from "./screens/AddPatient";
 import Patients from "./screens/Patients";
 import FAQ from "./screens/FAQ";
 import Feedback from "./screens/Feedback";
+import PatientList from "./screens/PatientList";
+import PatientDetails from "./screens/PatientDetails";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const App = () => {
@@ -36,7 +38,7 @@ const App = () => {
       <NavigationContainer>
         {hideSplashScreen ? (
           <Stack.Navigator
-            initialRouteName="LoginPage"
+            initialRouteName="Dashboard"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen
@@ -49,16 +51,20 @@ const App = () => {
               component={Feedback}
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+              name="PatientDetails"
+              component={PatientDetails}
+              options={{ headerShown: false }}
+            />
 
             <Stack.Screen
               name="FAQPage"
               component={FAQ}
               options={{ headerShown: false }}
             />
-
             <Stack.Screen
               name="Patients"
-              component={Patients}
+              component={PatientList}
               options={{ headerShown: false }}
             />
             <Stack.Screen

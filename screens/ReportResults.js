@@ -36,11 +36,11 @@ const ReportResults = () => {
         contentFit="cover"
         source={require("../assets/ellipse-7.png")}
       />
-      <Image
+      {/* <Image
         style={styles.reportResultsItem}
         contentFit="cover"
-        source={require("../assets/ellipse-6.png")}
-      />
+        source={require("../assets/ellipse-6.png")} */}
+      {/* /> */}
       <Image
         style={styles.microskopIcon}
         contentFit="cover"

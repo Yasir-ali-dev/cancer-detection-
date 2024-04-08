@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, Touchable } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import ProfileContainer from "../components/ProfileContainer";
@@ -63,15 +63,19 @@ const Dashboard = () => {
       </View>
 
       <View style={[styles.managePatients, styles.manageLayout]}>
-        <View style={[styles.managePatientsChild, styles.manageLayout]} />
-        <Image
-          style={[styles.manageImgIcon, styles.imgIconPosition]}
-          contentFit="cover"
-          source={require("../assets/manage-img.png")}
-        />
-        <Text style={[styles.managePatientsDetails, styles.captureTheSkinTypo]}>
-          Manage Patients Details
-        </Text>
+        <Pressable onPress={() => navigation.navigate("Patients")}>
+          <View style={[styles.managePatientsChild, styles.manageLayout]} />
+          <Image
+            style={[styles.manageImgIcon, styles.imgIconPosition]}
+            contentFit="cover"
+            source={require("../assets/manage-img.png")}
+          />
+          <Text
+            style={[styles.managePatientsDetails, styles.captureTheSkinTypo]}
+          >
+            Manage Patients Details
+          </Text>
+        </Pressable>
       </View>
 
       <View style={[styles.education, styles.educationPosition]}>
@@ -115,23 +119,6 @@ const Dashboard = () => {
       <ProfileContainer />
 
       <View style={styles.skinaccuracyRemovebgPreviewIcon}>
-        {/* <View style={{ width: 100 }}>
-          <PieChart
-            data={pieData}
-            showText
-            showValuesAsLabels
-            showTextBackground
-            textBackgroundColor="#333"
-            textBackgroundRadius={22}
-            textColor="white"
-            fontWeight="bold"
-            strokeWidth={1}
-            strokeColor="#333"
-            innerCircleBorderWidth={1}
-            innerCircleBorderColor="#333"
-            showGradient
-          />
-        </View> */}
         <View>
           <LineChart
             areaChart
