@@ -16,7 +16,7 @@ const PatientList = () => {
 
   const getData = async () => {
     try {
-      const response = await fetch("http://192.168.10.14:4000/patients");
+      const response = await fetch("http://10.102.138.107:4000/patients");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

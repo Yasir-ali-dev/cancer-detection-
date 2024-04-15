@@ -24,70 +24,24 @@ const UploadImage = () => {
   };
 
   return (
-    // <View
-    //   style={{
-    //     flex: 1,
-    //     paddingVertical: 40,
-    //     flexDirection: "column",
-    //     alignItems: "center",
-    //     justifyContent: "center",
-    //   }}
-    // >
-    //   <SelectDropdown
-    //     data={models}
-    //     onSelect={(selectedItem, index) => {
-    //       setSelectedValue(selectedItem);
-    //     }}
-    //     renderButton={(selectedItem, isOpened) => {
-    //       return (
-    //         <View style={STYLE.dropdownButtonStyle}>
-    //           <Text style={STYLE.dropdownButtonTxtStyle}>
-    //             {(selectedItem && selectedItem) || "Select your mood"}
-    //           </Text>
-    //         </View>
-    //       );
-    //     }}
-    //     renderItem={(item, index, isSelected) => {
-    //       return (
-    //         <View
-    //           style={{
-    //             ...STYLE.dropdownItemStyle,
-    //             ...(isSelected && { backgroundColor: "#D2D9DF" }),
-    //           }}
-    //         >
-    //           <Text style={STYLE.dropdownItemTxtStyle}>{item}</Text>
-    //         </View>
-    //       );
-    //     }}
-    //     showsVerticalScrollIndicator={false}
-    //     dropdownStyle={STYLE.dropdownMenuStyle}
-    //   ></SelectDropdown>
-    //   <View>
-    //     <Text>
-    //       System requires you to upload skin image for Cancer Detection. Don't
-    //       worry, your data will stay safe and private.
-    //     </Text>
-    //   </View>
-    //   <View>
-    //     <Text
-    //       style={STYLE.uploadAPhotoClr}
-    //     >{`Upload a photo of your Skin Lesion `}</Text>
-    //   </View>
-    //   <View style={STYLE.container}>
-    //     <Button title="Pick an image from camera roll" onPress={pickImage} />
-    //   </View>
-
-    // </View>
     <View style={styles.uploadImage}>
-      <View style={styles.uploadImageChild}>
-        <Text style={{ textAlign: "center",color:"" }}>Upload</Text>
-      </View>
-
+      <View style={styles.uploadImageChild}></View>
       <Pressable
         style={styles.continue}
         onPress={() => navigation.navigate("ReportResults")}
       >
-        <Text style={styles.continue1}>Continue</Text>
+        <Text
+          style={{
+            textAlign: "center",
+            width: 140,
+            paddingHorizontal: 40,
+            paddingTop: 7,
+            fontSize: 17,
+            color: "white",
+          }}
+        >
+          Submit
+        </Text>
       </Pressable>
 
       <Text
@@ -99,7 +53,6 @@ const UploadImage = () => {
         worry, your data will stay safe and private.
       </Text>
 
-      <View style={styles.uploadImageItem} />
       <View style={[styles.frame, styles.frameFlexBox]}>
         <View style={styles.autoLayoutVertical}>
           <Image
@@ -107,12 +60,56 @@ const UploadImage = () => {
             contentFit="cover"
             source={require("../assets/iconlyboldimage.png")}
           />
-          <Text style={[styles.selectFile, styles.selectFileTypo]}>
-            Select file
-          </Text>
+          <Pressable
+            style={[styles.selectFile, styles.selectFileTypo]}
+            onPress={pickImage}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+                color: "white",
+                fontWeight: "600",
+                fontSize: 18,
+                padding: 7,
+              }}
+            >
+              Select File
+            </Text>
+          </Pressable>
         </View>
       </View>
-      {/* <Text style={styles.selectModel}>Select Model</Text> */}
+
+      <View style={styles.selectModel}>
+        <SelectDropdown
+          data={models}
+          onSelect={(selectedItem, index) => {
+            setSelectedValue(selectedItem);
+          }}
+          renderButton={(selectedItem, isOpened) => {
+            return (
+              <View style={STYLE.dropdownButtonStyle}>
+                <Text style={STYLE.dropdownButtonTxtStyle}>
+                  {(selectedItem && selectedItem) || "Select your Model"}
+                </Text>
+              </View>
+            );
+          }}
+          renderItem={(item, index, isSelected) => {
+            return (
+              <View
+                style={{
+                  ...STYLE.dropdownItemStyle,
+                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                }}
+              >
+                <Text style={STYLE.dropdownItemTxtStyle}>{item}</Text>
+              </View>
+            );
+          }}
+          showsVerticalScrollIndicator={false}
+          dropdownStyle={STYLE.dropdownMenuStyle}
+        ></SelectDropdown>
+      </View>
     </View>
   );
 };
@@ -142,7 +139,7 @@ const STYLE = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     fontWeight: "500",
-    color: "#151E26",
+    color: "white",
   },
   dropdownButtonArrowStyle: {
     fontSize: 28,
@@ -198,11 +195,11 @@ const styles = StyleSheet.create({
   },
   uploadImageChild: {
     height: "6.5%",
-    width: "81.11%",
+    width: "75.11%",
     top: "80.75%",
     right: "8.06%",
     bottom: "12.75%",
-    left: "10.83%",
+    left: "12.19%",
     borderRadius: Border.br_36xl,
     backgroundColor: Color.colorForestgreen_200,
     position: "absolute",
@@ -234,7 +231,7 @@ const styles = StyleSheet.create({
   systemRequiresYou: {
     height: "8.13%",
     top: "41.25%",
-    left: 39,
+    left: 51,
     display: "flex",
     width: 293,
     lineHeight: 22,
@@ -286,7 +283,7 @@ const styles = StyleSheet.create({
   },
   frame: {
     top: 443,
-    left: 35,
+    left: 50,
     borderRadius: 32,
     width: 294,
     height: 140,
@@ -296,8 +293,8 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorForestgreen_200,
   },
   selectModel: {
-    top: 127,
-    left: 59,
+    top: 117,
+    left: 46,
     fontSize: FontSize.size_xl,
     lineHeight: 28,
     fontWeight: "700",

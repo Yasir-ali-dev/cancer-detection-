@@ -17,6 +17,7 @@ const PatientDetails = ({ route }) => {
         />
         <Text style={styles.yrsTypo}>{patient.email}</Text>
       </View>
+      {/* done */}
       <View style={[styles.vectorParent, styles.vectorPosition]}>
         <Image
           style={styles.frameItem}
@@ -41,7 +42,6 @@ const PatientDetails = ({ route }) => {
         />
         <Text style={styles.yrsTypo}>{patient.phone}</Text>
       </View>
-      {/* done */}
       <View style={[styles.ellipseContainer, styles.ellipseParentFlexBox]}>
         <Image
           style={styles.frameChild}
@@ -114,8 +114,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   frameChild: {
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 40,
   },
   yrsTypo: {
     marginLeft: 44,
@@ -138,8 +138,8 @@ const styles = StyleSheet.create({
     left: 63,
   },
   frameItem: {
-    width: 56,
-    height: 51,
+    width: 45,
+    height: 45,
   },
   vectorParent: {
     top: 631,

@@ -11,7 +11,7 @@ const ReportResults = () => {
   const getData = async () => {
     try {
       const response = await fetch(
-        "http://10.102.138.63:4000/reports/:65d1e7480bf1216222942221"
+        "http://10.102.138.107:4000/reports/:65d1e7480bf1216222942221"
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -36,20 +36,18 @@ const ReportResults = () => {
         contentFit="cover"
         source={require("../assets/ellipse-7.png")}
       />
-      {/* <Image
-        style={styles.reportResultsItem}
-        contentFit="cover"
-        source={require("../assets/ellipse-6.png")} */}
-      {/* /> */}
+
       <Image
         style={styles.microskopIcon}
         contentFit="cover"
         source={require("../assets/microskop.png")}
       />
+
       <View style={styles.reportResultsInner} />
-      <Text style={[styles.finished, styles.resultsTypo]}>Finished</Text>
+      <Text style={[styles.finished, styles.resultsTypo]}>Report</Text>
       <Text style={[styles.results, styles.resultsTypo]}>Results</Text>
       <Text style={styles.giveFeedback}>Give Feedback</Text>
+
       <View style={[styles.resultItem, styles.resultItemLayout]}>
         <View style={[styles.resultItemChild, styles.dnaIconPosition]} />
         <View style={[styles.image, styles.imagePosition]}>
@@ -64,11 +62,6 @@ const ReportResults = () => {
           <Text style={[styles.cancer, styles.nameTypo]}>Cancer Type</Text>
           <Text style={[styles.type, styles.typePosition]}>Melanoma</Text>
         </View>
-        {/* <Image
-          style={[styles.downloadIcon, styles.downloadIconPosition]}
-          contentFit="cover"
-          source={require("../assets/download.png")}
-        /> */}
       </View>
       <View style={[styles.resultItem1, styles.resultItemLayout]}>
         <View style={[styles.resultItemChild, styles.dnaIconPosition]} />
@@ -84,11 +77,6 @@ const ReportResults = () => {
           <Text style={[styles.cancer, styles.nameTypo]}>Severity</Text>
           <Text style={[styles.type, styles.typePosition]}>Malignant</Text>
         </View>
-        {/* <Image
-          style={[styles.downloadIcon1, styles.iconLayout]}
-          contentFit="cover"
-          source={require("../assets/download1.png")}
-        /> */}
       </View>
       <View style={[styles.resultItem2, styles.resultItemLayout]}>
         <View style={[styles.resultItemChild, styles.dnaIconPosition]} />
@@ -107,12 +95,8 @@ const ReportResults = () => {
             <Text style={styles.text4}>%</Text>
           </Text>
         </View>
-        {/* <Image
-          style={[styles.downloadIcon, styles.downloadIconPosition]}
-          contentFit="cover"
-          source={require("../assets/download.png")}
-        /> */}
       </View>
+
       <View style={styles.resultItem3}>
         <View style={[styles.resultItemChild, styles.dnaIconPosition]} />
         <View style={[styles.image3, styles.imagePosition]}>
@@ -127,22 +111,7 @@ const ReportResults = () => {
           <Text style={[styles.cancer, styles.nameTypo]}>Model Used</Text>
           <Text style={[styles.name, styles.nameTypo]}>ResNet 50</Text>
         </View>
-        {/* <Image
-          style={[styles.downloadIcon3, styles.downloadIconPosition]}
-          contentFit="cover"
-          source={require("../assets/download2.png")}
-        /> */}
       </View>
-      <Pressable
-        style={styles.close}
-        onPress={() => navigation.navigate("Dashboard")}
-      >
-        <Image
-          style={styles.icon}
-          contentFit="cover"
-          source={require("../assets/close.png")}
-        />
-      </Pressable>
     </View>
   );
 };
@@ -157,8 +126,8 @@ const styles = StyleSheet.create({
   },
   resultItemLayout: {
     height: 93,
-    width: 282,
-    left: 43,
+    width: 332,
+    left: 30,
     position: "absolute",
   },
   dnaIconPosition: {
@@ -215,7 +184,7 @@ const styles = StyleSheet.create({
   },
   reportResultsChild: {
     top: 0,
-    left: 58,
+    left: 70,
     width: 250,
     height: 233,
     position: "absolute",
@@ -229,14 +198,14 @@ const styles = StyleSheet.create({
   },
   microskopIcon: {
     top: 45,
-    left: 108,
+    left: 120,
     width: 150,
     height: 148,
     position: "absolute",
   },
   reportResultsInner: {
     top: 218,
-    left: 0,
+    left: 14,
     borderTopLeftRadius: Border.br_33xl,
     borderTopRightRadius: Border.br_33xl,
     borderBottomRightRadius: Border.br_19xl,
@@ -248,15 +217,15 @@ const styles = StyleSheet.create({
   },
   finished: {
     top: 233,
-    left: 150,
+    left: 158,
   },
   results: {
     top: 287,
-    left: 27,
+    left: 35,
   },
   giveFeedback: {
     top: 288,
-    left: 190,
+    left: 210,
     fontSize: FontSize.size_xl,
     textAlign: "right",
     color: Color.colorCornflowerblue_100,
@@ -295,6 +264,7 @@ const styles = StyleSheet.create({
     color: Color.colorBlack,
     top: "0%",
     fontSize: FontSize.text1_size,
+    width: 200,
   },
   type: {
     fontFamily: FontFamily.poppinsRegular,
@@ -399,8 +369,8 @@ const styles = StyleSheet.create({
   resultItem3: {
     top: 684,
     height: 91,
-    width: 282,
-    left: 43,
+    width: 332,
+    left: 30,
     position: "absolute",
   },
   icon: {
