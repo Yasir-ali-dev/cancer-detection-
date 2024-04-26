@@ -6,11 +6,86 @@ import {
   View,
   Button,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Image } from "expo-image";
 import { Color, FontFamily, FontSize, Border } from "../GlobalStyles";
+import SelectDropdown from "react-native-select-dropdown";
+import { home_uri } from "../url";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
+const models = ["-ve", "+ve"];
 const Feedback = () => {
+  const [selectedValue, setSelectedValue] = React.useState("");
+  const navigation = useNavigation();
+  const [feedback, setFeedback] = React.useState({
+    report_id: "66049786635f061c7b17607d",
+    feedback_type: "",
+    feedback_details: "",
+    lesion_location: "",
+    lesion_size: "",
+    lesion_color: "",
+    lesion_texture: "",
+  });
+  const handleChange = (name, value) => {
+    setFeedback({
+      ...feedback,
+      [name]: value,
+    });
+  };
+  // set it not settled
+  const handleSubmit = async () => {
+    if (
+      feedback.feedback_type === "" ||
+      feedback.feedback_details === "" ||
+      feedback.lesion_location === "" ||
+      feedback.feedback_type === "" ||
+      feedback.lesion_color === "" ||
+      feedback.lesion_size === "" ||
+      feedback.lesion_texture === ""
+    ) {
+      Alert.alert(
+        "Field Is Required",
+        "please fill the required fields, all fields are required!"
+      );
+    }
+    try {
+      const response = await axios.post(
+        `${home_uri}/feedbacks`,
+        JSON.stringify(feedback),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.data) {
+        throw new Error("No response data received");
+      }
+      setFeedback({
+        feedback_type: "",
+        feedback_details: "",
+        lesion_location: "",
+        lesion_size: "",
+        lesion_color: "",
+        lesion_texture: "",
+      });
+
+      Alert.alert(
+        "Feedback Is Created Successfully",
+        `${response.data.new_feedback._id}`
+      );
+
+      setTimeout(() => {
+        navigation.navigate("Dashboard");
+      }, 2000);
+    } catch (error) {
+      console.error(error.message);
+      Alert.alert("Error", `${JSON.stringify(error.response.data.message)}`);
+    }
+  };
+
   return (
     <View style={styles.feedback}>
       <View style={styles.nameField}>
@@ -20,6 +95,7 @@ const Feedback = () => {
         <TextInput
           style={[styles.nameFieldChild, styles.fieldChildShadowBox2]}
           placeholder=" Name"
+          value="hardcoded"
         />
       </View>
       <View style={[styles.lesioncolorField, styles.fieldLayout1]}>
@@ -29,6 +105,7 @@ const Feedback = () => {
         <TextInput
           style={[styles.lesioncolorFieldChild, styles.fieldChildShadowBox1]}
           placeholder=" Lesion Color"
+          onChangeText={(text) => handleChange("lesion_color", text)}
         />
       </View>
       <View style={[styles.lesionlocationField, styles.fieldLayout]}>
@@ -38,6 +115,7 @@ const Feedback = () => {
         <TextInput
           style={[styles.lesionlocationFieldChild, styles.fieldChildShadowBox]}
           placeholder=" Lesion Location"
+          onChangeText={(text) => handleChange("lesion_location", text)}
         />
       </View>
       <View style={[styles.lesionsizeField, styles.fieldPosition]}>
@@ -47,6 +125,7 @@ const Feedback = () => {
         <TextInput
           style={[styles.lesionsizeFieldChild, styles.fieldChildShadowBox]}
           placeholder=" Lesion Size"
+          onChangeText={(text) => handleChange("lesion_size", text)}
         />
       </View>
       <View style={[styles.lesiontextureField, styles.severityLayout]}>
@@ -56,26 +135,52 @@ const Feedback = () => {
         <TextInput
           style={[styles.lesiontextureFieldChild, styles.fieldChildShadowBox]}
           placeholder=" Lesion Texture"
+          onChangeText={(text) => handleChange("lesion_texture", text)}
         />
       </View>
+
       <View style={[styles.lesiontypeField, styles.fieldLayout]}>
         <Text style={[styles.lesionType, styles.lesionTypo]}>Lesion Type</Text>
-        <TextInput
-          style={[styles.lesiontypeFieldChild, styles.fieldChildShadowBox]}
-          placeholder=" Lesion Type"
-        />
+        <SelectDropdown
+          data={models}
+          onSelect={(selectedItem, index) => {
+            setSelectedValue(selectedItem);
+            setFeedback({
+              ...feedback,
+              ["feedback_type"]: selectedItem,
+            });
+          }}
+          renderButton={(selectedItem, isOpened) => {
+            return (
+              <View style={STYLE.dropdownButtonStyle}>
+                <Text style={STYLE.dropdownButtonTxtStyle}>
+                  {(selectedItem && selectedItem) || "Select Feedback Type"}
+                </Text>
+              </View>
+            );
+          }}
+          renderItem={(item, index, isSelected) => {
+            return (
+              <View
+                style={{
+                  ...STYLE.dropdownItemStyle,
+                  ...(isSelected && { backgroundColor: "#D2D9DF" }),
+                }}
+              >
+                <Text style={STYLE.dropdownItemTxtStyle}>{item}</Text>
+              </View>
+            );
+          }}
+          showsVerticalScrollIndicator={false}
+          dropdownStyle={STYLE.dropdownMenuStyle}
+        ></SelectDropdown>
       </View>
-      <View style={[styles.severityField, styles.severityLayout]}>
-        <Text style={[styles.severity, styles.lesionTypo]}>Severity</Text>
-        <TextInput
-          style={[styles.severityFieldChild, styles.severityLayout]}
-          placeholder=" Severity"
-        />
-      </View>
+
       <View style={[styles.feedbackField, styles.fieldPosition]}>
         <TextInput
           style={[styles.feedbackFieldChild, styles.fieldChildShadowBox2]}
           multiline={true}
+          onChangeText={(text) => handleChange("feedback_details", text)}
         />
         <Text style={[styles.feedBack, styles.feedBackTypo]}>Feed back</Text>
       </View>
@@ -93,7 +198,7 @@ const Feedback = () => {
             styles.button,
             { backgroundColor: "#38903B", borderRadius: 5 },
           ]} // Set background color
-          onPress={() => {}}
+          onPress={() => handleSubmit()}
         >
           <Text
             style={{
@@ -113,6 +218,69 @@ const Feedback = () => {
     </View>
   );
 };
+
+const STYLE = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginTop: 20,
+  },
+  dropdownButtonStyle: {
+    width: 307,
+    height: 35,
+    top: 20,
+    backgroundColor: Color.colorDarkgreen,
+    borderRadius: 12,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 12,
+  },
+  dropdownButtonTxtStyle: {
+    flex: 1,
+    fontSize: 15,
+    fontWeight: "500",
+    color: "white",
+  },
+  dropdownButtonArrowStyle: {
+    fontSize: 28,
+  },
+  dropdownButtonIconStyle: {
+    fontSize: 28,
+    marginRight: 8,
+  },
+  dropdownMenuStyle: {
+    backgroundColor: "#E9ECEF",
+    borderRadius: 8,
+  },
+  dropdownItemStyle: {
+    width: "100%",
+    flexDirection: "row",
+    paddingHorizontal: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 8,
+  },
+  dropdownItemTxtStyle: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: "500",
+    color: "#151E26",
+  },
+  dropdownItemIconStyle: {
+    fontSize: 28,
+    marginRight: 8,
+  },
+  uploadAPhotoClr: {
+    color: Color.colorDarkgreen,
+    fontFamily: FontFamily.poppinsRegular,
+  },
+});
 
 const styles = StyleSheet.create({
   btn: {
@@ -252,7 +420,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   lesioncolorField: {
-    top: 165,
+    top: 180,
     width: 306,
     position: "absolute",
   },
@@ -265,7 +433,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   lesionlocationField: {
-    top: 293,
+    top: 320,
     left: 40,
     height: 49,
     position: "absolute",
@@ -275,7 +443,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   lesionsizeField: {
-    top: 230,
+    top: 250,
     height: 49,
     width: 307,
   },
@@ -287,7 +455,7 @@ const styles = StyleSheet.create({
     top: 20,
   },
   lesiontextureField: {
-    top: 357,
+    top: 390,
     height: 50,
     left: 40,
   },
@@ -300,7 +468,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   lesiontypeField: {
-    top: 423,
+    top: 460,
     left: 40,
     height: 49,
     position: "absolute",
@@ -317,25 +485,25 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     shadowOpacity: 1,
     elevation: 14,
-    shadowRadius: 14,
+    shadowRadius: 10,
     shadowOffset: {
       width: 0,
       height: 0,
     },
 
     shadowColor: "rgba(0, 0, 0, 0.11)",
-    borderRadius: 700,
+    borderRadius: 7,
     left: 0,
     backgroundColor: Color.colorWhite,
     padding: 5,
   },
   severityField: {
-    top: 487,
+    top: 493,
     height: 50,
     left: 40,
   },
   feedbackFieldChild: {
-    top: 37,
+    top: 20,
     height: 119,
     width: 306,
     left: 0,
@@ -347,7 +515,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   feedbackField: {
-    top: 538,
+    top: 540,
     height: 156,
     width: 306,
   },

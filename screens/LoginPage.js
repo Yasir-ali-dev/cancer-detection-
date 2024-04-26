@@ -7,78 +7,140 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  ScrollView,
+  Alert,
 } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, Border, FontFamily, FontSize } from "../GlobalStyles";
+import axios from "axios";
+import { home_uri } from "../url";
 
 const LoginPage = () => {
   const navigation = useNavigation();
+  const [credentials, setCredentials] = React.useState({
+    email: "",
+    password: "",
+  });
+
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleChange = (name, value) => {
+    setCredentials({
+      ...credentials,
+      [name]: value,
+    });
+  };
+  const handleSubmit = async () => {
+    if (!isValidEmail(credentials.email)) {
+      Alert.alert("Invalid Email", "Please enter a valid email address.");
+      return;
+    }
+    if (credentials.password.length < 5) {
+      Alert.alert("Invalid Password", "password should be atleast 5 character");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `${home_uri}/auth/login`,
+        JSON.stringify(credentials),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.data) {
+        throw new Error("No response data received");
+      }
+      console.log(response.data.message);
+      setTimeout(() => {
+        navigation.navigate("Dashboard");
+        // data should be passed of physicain also change the beckend
+      }, 2000);
+    } catch (error) {
+      console.log(error.message);
+      Alert.alert("Error", `${JSON.stringify(error.response.data.message)}`);
+    }
+  };
 
   return (
-    <View style={styles.loginPage}>
-      <View style={[styles.loginPageChild, styles.loginShadowBox]} />
-      <View style={[styles.loginPageItem, styles.loginShadowBox]} />
-      <TextInput
-        style={[styles.username, styles.usernameTypo]}
-        // onChangeText={(text) => handleChange("name", text)}
-        placeholder="Enter username"
-      />
-      <TextInput
-        style={[styles.password, styles.usernameTypo]}
-        // onChangeText={(text) => handleChange("name", text)}
-        placeholder="Enter password"
-      />
-      <Text style={[styles.loginToYour, styles.welcomeClr]}>
-        Login to your account
-      </Text>
-      <Text style={[styles.rememberMe, styles.rememberMeTypo]}>
-        Remember me
-      </Text>
-      {/* <View  /> */}
+    <ScrollView
+      showsVerticalScrollIndicator={true}
+      showsHorizontalScrollIndicator={false}
+      pagingEnabled={false}
+      contentContainerStyle={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <View style={styles.loginPage}>
+        <View style={[styles.loginPageChild, styles.loginShadowBox]} />
+        <View style={[styles.loginPageItem, styles.loginShadowBox]} />
+        <TextInput
+          style={[styles.username, styles.usernameTypo]}
+          onChangeText={(text) => handleChange("email", text)}
+          placeholder="Enter email"
+        />
+        <TextInput
+          style={[styles.password, styles.usernameTypo]}
+          onChangeText={(text) => handleChange("password", text)}
+          placeholder="Enter password"
+          secureTextEntry={true}
+        />
+        <Text style={[styles.loginToYour, styles.welcomeClr]}>
+          Login to your account
+        </Text>
+        <Text style={[styles.rememberMe, styles.rememberMeTypo]}>
+          Remember me
+        </Text>
 
-      <TouchableOpacity
-        style={[
-          styles.login,
-          {
-            backgroundColor: "#38903B",
-            paddingHorizontal: 133,
-            paddingVertical: 10,
-            borderRadius: 10,
-          },
-        ]}
-        onPress={() => navigation.navigate("Dashboard")}
-      >
-        <Text>Login</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.login,
+            {
+              backgroundColor: "#38903B",
+              paddingHorizontal: 133,
+              paddingVertical: 10,
+              borderRadius: 10,
+            },
+          ]}
+          onPress={() => handleSubmit()}
+        >
+          <Text>Login</Text>
+        </TouchableOpacity>
 
-      <Text style={[styles.dontHaveAnContainer, styles.welcomeClr]}>
-        <Text style={styles.dontHaveAnTypo}>{`Don't have an account? `}</Text>
-        <Text style={styles.login1Typo}>Register</Text>
-      </Text>
-      <Text style={[styles.welcome, styles.welcomeClr]}>{`Welcome `}</Text>
-      <Image
-        style={[styles.vectorIcon, styles.vectorIconLayout]}
-        contentFit="cover"
-        source={require("../assets/vector1.png")}
-      />
-      <Image
-        style={styles.logoIcon}
-        contentFit="cover"
-        source={require("../assets/logo.png")}
-      />
-      <Image
-        style={[styles.vectorIcon1, styles.vectorIconLayout]}
-        contentFit="cover"
-        source={require("../assets/vector2.png")}
-      />
-      <View style={styles.rectangleView} />
-      <Image
-        style={[styles.vectorIcon2, styles.vectorIconLayout]}
-        contentFit="cover"
-        source={require("../assets/vector3.png")}
-      />
-    </View>
+        <Text style={[styles.dontHaveAnContainer, styles.welcomeClr]}>
+          <Text style={styles.dontHaveAnTypo}>{`Don't have an account? `}</Text>
+          <Text style={styles.login1Typo}>Register</Text>
+        </Text>
+        <Text style={[styles.welcome, styles.welcomeClr]}>{`Welcome `}</Text>
+        <Image
+          style={[styles.vectorIcon, styles.vectorIconLayout]}
+          contentFit="cover"
+          source={require("../assets/vector1.png")}
+        />
+        <Image
+          style={styles.logoIcon}
+          contentFit="cover"
+          source={require("../assets/logo.png")}
+        />
+        <Image
+          style={[styles.vectorIcon1, styles.vectorIconLayout]}
+          contentFit="cover"
+          source={require("../assets/vector2.png")}
+        />
+        <View style={styles.rectangleView} />
+        <Image
+          style={[styles.vectorIcon2, styles.vectorIconLayout]}
+          contentFit="cover"
+          source={require("../assets/vector3.png")}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
@@ -89,7 +151,7 @@ const styles = StyleSheet.create({
     left: "11.17%",
     right: "11.39%",
     width: "77.44%",
-    height: "6.44%",
+    height: "7.44%",
     position: "absolute",
     shadowOpacity: 1,
     elevation: 4,
@@ -104,10 +166,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: Color.othersWhite,
     left: "25%",
-    height: "5.13%",
+    height: "6.13%",
     fontFamily: FontFamily.poppinsRegular,
     fontSize: FontSize.bodyLargeMedium_size,
     position: "absolute",
+    paddingVertical: 10,
+    // paddingHorizontal: -5,
   },
   welcomeClr: {
     color: Color.colorDarkgreen,
@@ -116,7 +180,7 @@ const styles = StyleSheet.create({
   },
   rememberMeTypo: {
     fontSize: FontSize.size_sm,
-    top: "61.75%",
+    top: "63.25%",
     height: "4.5%",
     color: Color.colorDarkgreen,
     fontFamily: FontFamily.poppinsLight,
@@ -139,7 +203,7 @@ const styles = StyleSheet.create({
     bottom: "46.75%",
   },
   loginPageItem: {
-    top: "54.33%",
+    top: "55.33%",
     bottom: "39.24%",
   },
   username: {
@@ -148,7 +212,7 @@ const styles = StyleSheet.create({
   },
   password: {
     width: "30.83%",
-    top: "55.25%",
+    top: "56.25%",
   },
   loginToYour: {
     height: "3.38%",
@@ -215,7 +279,7 @@ const styles = StyleSheet.create({
   },
   vectorIcon: {
     width: "5.81%",
-    top: "48.74%",
+    top: "49.14%",
     right: "79.56%",
     bottom: "48.58%",
     left: "14.64%",
@@ -232,7 +296,7 @@ const styles = StyleSheet.create({
   },
   vectorIcon1: {
     width: "5.08%",
-    top: "56.15%",
+    top: "57.70%",
     right: "80.28%",
     bottom: "41.16%",
     left: "14.64%",
@@ -241,7 +305,7 @@ const styles = StyleSheet.create({
     maxWidth: "100%",
   },
   rectangleView: {
-    top: 499,
+    top: 510,
     left: 46,
     backgroundColor: Color.othersWhite,
     width: 11,
@@ -251,10 +315,10 @@ const styles = StyleSheet.create({
   vectorIcon2: {
     height: "0.54%",
     width: "1.64%",
-    top: "62.71%",
+    top: "64.1%",
     right: "84.83%",
     bottom: "36.75%",
-    left: "13.53%",
+    left: "12.23%",
   },
   loginPage: {
     borderRadius: Border.br_18xl,

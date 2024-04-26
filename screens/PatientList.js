@@ -6,17 +6,18 @@ import {
   View,
   Pressable,
   Image,
-  TouchableOpacity,
 } from "react-native";
 import { FontFamily, FontSize, Color } from "../GlobalStyles";
 import { useNavigation } from "@react-navigation/native";
+import { home_uri } from "../url";
+
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
   const navigation = useNavigation();
 
   const getData = async () => {
     try {
-      const response = await fetch("http://10.102.138.107:4000/patients");
+      const response = await fetch(`${home_uri}/patients`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -30,10 +31,6 @@ const PatientList = () => {
   useEffect(() => {
     getData();
   }, []);
-
-  const viewDetails = (patient) => {
-    console.log("View details for:", patient.name);
-  };
 
   return (
     <View style={styles.patientList}>

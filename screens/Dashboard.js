@@ -51,16 +51,20 @@ const Dashboard = () => {
           source={require("../assets/report-img.png")}
         />
       </Pressable>
-
-      <View style={[styles.feedback, styles.reportChildLayout]}>
-        <View style={[styles.feedbackChild, styles.childShadowBox1]} />
-        <Text style={[styles.feedBack, styles.reportsTypo]}>Feed Back</Text>
-        <Image
-          style={styles.feedbackImgIcon}
-          contentFit="cover"
-          source={require("../assets/feedback-img.png")}
-        />
-      </View>
+      <Pressable
+        style={[styles.feedback, styles.reportChildLayout]}
+        onPress={() => navigation.navigate("Feedback")}
+      >
+        <View>
+          <View style={[styles.feedbackChild, styles.childShadowBox1]} />
+          <Text style={[styles.feedBack, styles.reportsTypo]}>Feed Back</Text>
+          <Image
+            style={styles.feedbackImgIcon}
+            contentFit="cover"
+            source={require("../assets/feedback-img.png")}
+          />
+        </View>
+      </Pressable>
 
       <View style={[styles.managePatients, styles.manageLayout]}>
         <Pressable onPress={() => navigation.navigate("Patients")}>
@@ -91,15 +95,17 @@ const Dashboard = () => {
       </View>
 
       <View style={[styles.results, styles.manageLayout]}>
-        <View style={[styles.resultsChild, styles.childShadowBox]} />
-        <Image
-          style={[styles.resultImgIcon, styles.educationPosition]}
-          contentFit="cover"
-          source={require("../assets/result-img.png")}
-        />
-        <Text style={[styles.resultsSummary, styles.resultsSummaryTypo]}>
-          Results Summary
-        </Text>
+        <Pressable onPress={() => navigation.navigate("ResultSummary")}>
+          <View style={[styles.resultsChild, styles.childShadowBox]} />
+          <Image
+            style={[styles.resultImgIcon, styles.educationPosition]}
+            contentFit="cover"
+            source={require("../assets/result-img.png")}
+          />
+          <Text style={[styles.resultsSummary, styles.resultsSummaryTypo]}>
+            Results Summary
+          </Text>
+        </Pressable>
       </View>
 
       <Pressable
@@ -119,27 +125,29 @@ const Dashboard = () => {
       <ProfileContainer />
 
       <View style={styles.skinaccuracyRemovebgPreviewIcon}>
-        <View>
-          <LineChart
-            areaChart
-            curved
-            data={lineData}
-            height={190}
-            showVerticalLines
-            spacing={40}
-            initialSpacing={0}
-            color1="skyblue"
-            color2="orange"
-            textColor1="green"
-            hideDataPoints
-            dataPointsColor1="blue"
-            dataPointsColor2="red"
-            startFillColor1="skyblue"
-            startFillColor2="orange"
-            startOpacity={0.8}
-            endOpacity={0.3}
-          />
-        </View>
+        <Pressable onPress={() => navigation.navigate("ResultSummary")}>
+          <View>
+            <LineChart
+              areaChart
+              curved
+              data={lineData}
+              height={190}
+              showVerticalLines
+              spacing={40}
+              initialSpacing={0}
+              color1="skyblue"
+              color2="orange"
+              textColor1="green"
+              hideDataPoints
+              dataPointsColor1="blue"
+              dataPointsColor2="red"
+              startFillColor1="skyblue"
+              startFillColor2="orange"
+              startOpacity={0.8}
+              endOpacity={0.3}
+            />
+          </View>
+        </Pressable>
       </View>
 
       <View style={[styles.header, styles.headerPosition]}>

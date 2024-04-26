@@ -8,29 +8,16 @@ import {
   ScrollView,
   Pressable,
   Alert,
-  DatePickerAndroid,
-  Modal,
-  Platform,
 } from "react-native";
 import { Image } from "expo-image";
 import { Color } from "../GlobalStyles";
-import DateTimePicker from "react-native-ui-datepicker";
-import dayjs from "dayjs";
+import axios from "axios";
+import { home_uri } from "../url";
+import { useNavigation } from "@react-navigation/native";
 
 const AddPatient = () => {
-  const [date, setDate] = React.useState(dayjs());
-
-  const [showPicker, setShowPicker] = React.useState(false);
-
-  const handleDateChange = (selectedDate) => {
-    console.log(selectedDate);
-    if (selectedDate) {
-      setDate(selectedDate);
-    }
-    setShowPicker(false); // Close the picker when a date is chosen
-  };
-
   const [formData, setFormData] = React.useState({
+    physician_id: "65e0769f7cf00659124913c7",
     name: "",
     age: "",
     gender: "",
@@ -40,6 +27,7 @@ const AddPatient = () => {
     address: "",
     date_of_birth: "",
   });
+  const navigation = useNavigation();
 
   const handleChange = (name, value) => {
     setFormData({
@@ -48,9 +36,19 @@ const AddPatient = () => {
     });
   };
 
-  const handleSubmit = () => {
-    // Handle form submission here
-
+  const handleSubmit = async () => {
+    if (
+      formData.name === "" ||
+      formData.gender === "" ||
+      formData.phone === "" ||
+      formData.age === ""
+    ) {
+      Alert.alert(
+        "Invalid Input",
+        "Please enter the required fields, Name, Age, Phone and Age"
+      );
+      return;
+    }
     if (!isValidEmail(formData.email)) {
       Alert.alert("Invalid Email", "Please enter a valid email address.");
       return;
@@ -63,7 +61,49 @@ const AddPatient = () => {
       );
       return;
     }
-    console.log("Form Data:", formData);
+    if (!isValidDate(formData.date_of_birth)) {
+      Alert.alert(
+        "Invalid Date Of Birth",
+        "Please enter a valid date in the format 00/00/0000"
+      );
+    }
+    if (!isValidDate(formData.cancer_acquired_date)) {
+      Alert.alert(
+        "Invalid Cancer Acquired Date",
+        "Please enter a valid date in the format 00/00/0000"
+      );
+    }
+    try {
+      const response = await axios.post(
+        `${home_uri}/patients`,
+        JSON.stringify(formData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.data) {
+        throw new Error("No response data received");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+    setFormData({
+      physician_id: "65e0769f7cf00659124913c7",
+      name: "",
+      age: "",
+      gender: "",
+      cancer_acquired_date: "",
+      email: "",
+      phone: "",
+      address: "",
+      date_of_birth: "",
+    });
+    Alert.alert("Patient Is Created Successfully", `${formData.name}`);
+    setTimeout(() => {
+      navigation.navigate("Dashboard");
+    }, 2000);
   };
 
   const isValidEmail = (email) => {
@@ -72,9 +112,14 @@ const AddPatient = () => {
   };
 
   const isValidPhoneNumber = (phoneNumber) => {
-    console.log(phoneNumber);
     const phoneRegex = /^\d{11}$/;
     return phoneRegex.test(phoneNumber);
+  };
+
+  const isValidDate = (date) => {
+    const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+    // console.log(dateRegex.test(date));
+    return dateRegex.test(date);
   };
 
   return (
@@ -111,7 +156,12 @@ const AddPatient = () => {
         <View style={STYLE.addPatientItem} />
         <View style={{ gap: 5 }}>
           <View>
-            <Text style={{ fontSize: 15, marginBottom: 2 }}>Name</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={{ fontSize: 15, marginBottom: 2, paddingRight: 2 }}>
+                Name{" "}
+              </Text>
+              <Text style={{ color: "red" }}> *</Text>
+            </View>
             <TextInput
               style={STYLE.box}
               value={formData.name}
@@ -120,7 +170,12 @@ const AddPatient = () => {
             />
           </View>
           <View>
-            <Text style={{ fontSize: 15, marginBottom: 2 }}>Age</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={{ fontSize: 15, marginBottom: 2, paddingRight: 2 }}>
+                Age
+              </Text>
+              <Text style={{ color: "red" }}> *</Text>
+            </View>
             <TextInput
               keyboardType="numeric"
               style={STYLE.box}
@@ -130,7 +185,13 @@ const AddPatient = () => {
             />
           </View>
           <View>
-            <Text style={{ fontSize: 15, marginBottom: 2 }}>Gender</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={{ fontSize: 15, marginBottom: 2, paddingRight: 2 }}>
+                Gender
+              </Text>
+              <Text style={{ color: "red" }}> *</Text>
+            </View>
+
             <TextInput
               style={STYLE.box}
               value={formData.gender}
@@ -139,7 +200,12 @@ const AddPatient = () => {
             />
           </View>
           <View>
-            <Text style={{ fontSize: 15, marginBottom: 2 }}>Phone</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={{ fontSize: 15, marginBottom: 2, paddingRight: 2 }}>
+                Phone
+              </Text>
+              <Text style={{ color: "red" }}> *</Text>
+            </View>
             <TextInput
               style={STYLE.box}
               value={formData.phone}
@@ -159,7 +225,9 @@ const AddPatient = () => {
             />
           </View>
           <View>
-            <Text style={{ fontSize: 15, marginBottom: 2 }}>Date</Text>
+            <Text style={{ fontSize: 15, marginBottom: 2 }}>
+              Cancer Acquired Date
+            </Text>
             <TextInput
               style={STYLE.box}
               value={formData.cancer_acquired_date}
@@ -168,36 +236,33 @@ const AddPatient = () => {
               }
               placeholder="Enter Cancer Detection Date"
             />
+            <Text
+              style={{
+                color: "green",
+                paddingLeft: 3,
+                paddingBottom: 5,
+              }}
+            >
+              eg: 00/00/0000
+            </Text>
           </View>
           <View>
             <Text style={{ fontSize: 15, marginBottom: 2 }}>Date of Birth</Text>
-            {/* <TextInput
+            <TextInput
               style={STYLE.box}
               value={formData.date_of_birth}
               onChangeText={(text) => handleChange("date_of_birth", text)}
               placeholder="Enter Date of Birth"
             />
-             */}
-            <View>
-              <Button title="Select Date" onPress={() => setShowPicker(true)} />
-              <Modal
-                animationType="slide"
-                transparent={true}
-                visible={showPicker}
-                onRequestClose={() => setShowPicker(false)}
-              >
-                <View style={styles.modalContainer}>
-                  <View style={styles.modalContent}>
-                    <DateTimePicker
-                      mode="date"
-                      value={date}
-                      timePicker={true}
-                      onChange={({ date }) => console.log(date)}
-                    />
-                  </View>
-                </View>
-              </Modal>
-            </View>
+            <Text
+              style={{
+                color: "green",
+                paddingLeft: 3,
+                paddingBottom: 5,
+              }}
+            >
+              eg: 00/00/0000
+            </Text>
           </View>
           <View>
             <Text style={{ fontSize: 15, marginBottom: 2 }}>Address</Text>
