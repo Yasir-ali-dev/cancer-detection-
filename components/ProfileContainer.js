@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Pressable } from "react-native";
 import { Color, FontSize, FontFamily, Border, Padding } from "../GlobalStyles";
 import { useNavigation } from "@react-navigation/core";
 
-const ProfileContainer = () => {
+const ProfileContainer = ({ user }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.topFrame}>
@@ -14,9 +14,7 @@ const ProfileContainer = () => {
           contentFit="cover"
           source={require("../assets/docicondoctoriconpediatricianiconlogocirclesymbolanimationpngclipartremovebgpreview-1.png")}
         />
-        <Text
-          style={styles.dilshadHussain92}
-        >{`Dilshad Hussain +92 3052016666 `}</Text>
+        <Text style={styles.dilshadHussain92}>{`${user.email}`}</Text>
       </View>
       <View style={[styles.ellipseParent, styles.groupChildLayout]}>
         <Pressable onPress={() => navigation.navigate("FAQPage")}>
@@ -51,8 +49,8 @@ const styles = StyleSheet.create({
   dilshadHussain92: {
     fontSize: FontSize.size_smi,
     color: Color.colorBlack,
-    width: 117,
-    marginLeft: 6,
+    width: 170,
+    marginLeft: 0,
     textAlign: "center",
     fontFamily: FontFamily.poppinsRegular,
   },

@@ -138,7 +138,7 @@ const AddPatient = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          paddingTop: 70,
+          paddingTop: 5,
         }}
       >
         <View>
@@ -153,7 +153,7 @@ const AddPatient = () => {
           />
           <Text>Add Patient</Text>
         </View>
-        <View style={STYLE.addPatientItem} />
+
         <View style={{ gap: 5 }}>
           <View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>

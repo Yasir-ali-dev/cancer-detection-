@@ -75,23 +75,9 @@ const ResultSummary = () => {
         display: "flex",
         flexDirection: "column",
         paddingHorizontal: 10,
-        paddingVertical: 30,
         gap: 11,
       }}
     >
-      <Text
-        style={{
-          fontSize: 20,
-          textAlign: "center",
-          paddingVertical: 3,
-          marginHorizontal: -15,
-          backgroundColor: Color.colorForestgreen_200,
-          color: "white",
-          fontFamily: FontFamily.poppinsMedium,
-        }}
-      >
-        Physician Result Summary
-      </Text>
       <View
         style={{
           display: "flex",

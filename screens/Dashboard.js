@@ -6,7 +6,8 @@ import ProfileContainer from "../components/ProfileContainer";
 import { Border, Color, FontFamily, FontSize } from "../GlobalStyles";
 import { PieChart, LineChart } from "react-native-gifted-charts";
 
-const Dashboard = () => {
+const Dashboard = ({ route }) => {
+  const user = route.params.user;
   const navigation = useNavigation();
   const pieData = [
     { value: 54, color: "#177AD5" },
@@ -41,7 +42,7 @@ const Dashboard = () => {
       </Pressable>
       <Pressable
         style={[styles.report, styles.reportChildLayout]}
-        onPress={() => navigation.navigate("ReportResults")}
+        onPress={() => navigation.navigate("ReportList")}
       >
         <View style={[styles.reportChild, styles.childShadowBox1]} />
         <Text style={[styles.reports, styles.reportsTypo]}>Reports</Text>
@@ -83,15 +84,17 @@ const Dashboard = () => {
       </View>
 
       <View style={[styles.education, styles.educationPosition]}>
-        <View style={[styles.educationChild, styles.childShadowBox]} />
-        <Text style={[styles.educationResources, styles.resultsSummaryTypo]}>
-          Education Resources
-        </Text>
-        <Image
-          style={[styles.educationImgIcon, styles.imgIconLayout]}
-          contentFit="cover"
-          source={require("../assets/educationimg.png")}
-        />
+        <Pressable onPress={() => navigation.navigate("EducationResource")}>
+          <View style={[styles.educationChild, styles.childShadowBox]} />
+          <Text style={[styles.educationResources, styles.resultsSummaryTypo]}>
+            Education Resources
+          </Text>
+          <Image
+            style={[styles.educationImgIcon, styles.imgIconLayout]}
+            contentFit="cover"
+            source={require("../assets/educationimg.png")}
+          />
+        </Pressable>
       </View>
 
       <View style={[styles.results, styles.manageLayout]}>
@@ -122,7 +125,7 @@ const Dashboard = () => {
           Capture the Skin lesion for cancer detection
         </Text>
       </Pressable>
-      <ProfileContainer />
+      <ProfileContainer user={user} />
 
       <View style={styles.skinaccuracyRemovebgPreviewIcon}>
         <Pressable onPress={() => navigation.navigate("ResultSummary")}>
@@ -364,8 +367,8 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   managePatients: {
-    top: 583,
-    height: 60,
+    top: 655,
+    height: 80,
     left: 22,
     width: 320,
     position: "absolute",
@@ -384,7 +387,7 @@ const styles = StyleSheet.create({
     width: 48,
   },
   education: {
-    top: 655,
+    top: 726,
     height: 60,
     width: 344,
     left: 22,
@@ -404,7 +407,7 @@ const styles = StyleSheet.create({
     height: 21,
   },
   results: {
-    top: 726,
+    top: 588,
     height: 60,
     left: 22,
     width: 344,

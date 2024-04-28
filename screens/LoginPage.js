@@ -56,11 +56,14 @@ const LoginPage = () => {
       if (!response.data) {
         throw new Error("No response data received");
       }
-      console.log(response.data.message);
+      Alert.alert(
+        "Physician is login Successfully",
+        `${response.data.user.email}`
+      );
+
       setTimeout(() => {
-        navigation.navigate("Dashboard");
-        // data should be passed of physicain also change the beckend
-      }, 2000);
+        navigation.navigate("Dashboard", { user: response.data.user });
+      }, 1000);
     } catch (error) {
       console.log(error.message);
       Alert.alert("Error", `${JSON.stringify(error.response.data.message)}`);

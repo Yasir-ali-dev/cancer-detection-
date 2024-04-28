@@ -186,7 +186,7 @@ const Feedback = () => {
       </View>
       <View
         style={{
-          top: 724,
+          top: 610,
           left: 140,
           fontSize: 20,
           color: Color.colorWhite,
@@ -214,7 +214,7 @@ const Feedback = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <Text style={[styles.feedback1, styles.addTypo]}>FeedBack</Text>
+      {/* <Text style={[styles.feedback1, styles.addTypo]}>FeedBack</Text> */}
     </View>
   );
 };
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
     height: 35,
   },
   nameField: {
-    top: 121,
+    top: 20,
     left: 34,
     width: 294,
     height: 26,
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   lesioncolorField: {
-    top: 180,
+    top: 80,
     width: 306,
     position: "absolute",
   },
@@ -433,7 +433,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   lesionlocationField: {
-    top: 320,
+    top: 150,
     left: 40,
     height: 49,
     position: "absolute",
@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   lesionsizeField: {
-    top: 250,
+    top: 220,
     height: 49,
     width: 307,
   },
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
     top: 20,
   },
   lesiontextureField: {
-    top: 390,
+    top: 290,
     height: 50,
     left: 40,
   },
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
     height: 30,
   },
   lesiontypeField: {
-    top: 460,
+    top: 360,
     left: 40,
     height: 49,
     position: "absolute",
@@ -515,7 +515,7 @@ const styles = StyleSheet.create({
     top: 0,
   },
   feedbackField: {
-    top: 540,
+    top: 440,
     height: 156,
     width: 306,
   },

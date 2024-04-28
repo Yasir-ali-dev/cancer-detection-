@@ -5,9 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Color, FontSize, FontFamily, Border } from "../GlobalStyles";
 import { home_uri } from "../url";
 
-const ReportResults = () => {
+const ReportResults = ({ route }) => {
   const navigation = useNavigation();
+  const report = route.params.report;
 
+  /*
   const getData = async () => {
     try {
       const response = await fetch(
@@ -28,6 +30,7 @@ const ReportResults = () => {
   React.useEffect(() => {
     getData();
   }, []);
+*/
 
   return (
     <View style={styles.reportResults}>
@@ -60,7 +63,9 @@ const ReportResults = () => {
         </View>
         <View style={[styles.text, styles.textPosition]}>
           <Text style={[styles.cancer, styles.nameTypo]}>Cancer Type</Text>
-          <Text style={[styles.type, styles.typePosition]}>Melanoma</Text>
+          <Text style={[styles.type, styles.typePosition]}>
+            {report.lesion.lesion_type}
+          </Text>
         </View>
       </View>
       <View style={[styles.resultItem1, styles.resultItemLayout]}>
@@ -75,7 +80,9 @@ const ReportResults = () => {
         </View>
         <View style={[styles.group, styles.textPosition]}>
           <Text style={[styles.cancer, styles.nameTypo]}>Severity</Text>
-          <Text style={[styles.type, styles.typePosition]}>Malignant</Text>
+          <Text style={[styles.type, styles.typePosition]}>
+            {report.lesion.lesion_severity}
+          </Text>
         </View>
       </View>
       <View style={[styles.resultItem2, styles.resultItemLayout]}>
@@ -91,8 +98,8 @@ const ReportResults = () => {
         <View style={[styles.text1, styles.textPosition]}>
           <Text style={[styles.cancer, styles.nameTypo]}>Accuracy</Text>
           <Text style={[styles.text2, styles.typePosition]}>
-            <Text style={styles.text3}>85</Text>
-            <Text style={styles.text4}>%</Text>
+            <Text style={styles.text3}>{report.accuracy_score}</Text>
+            {/* <Text style={styles.text4}>%</Text> */}
           </Text>
         </View>
       </View>
@@ -109,7 +116,9 @@ const ReportResults = () => {
         </View>
         <View style={[styles.text5, styles.textPosition]}>
           <Text style={[styles.cancer, styles.nameTypo]}>Model Used</Text>
-          <Text style={[styles.name, styles.nameTypo]}>ResNet 50</Text>
+          <Text style={[styles.name, styles.nameTypo]}>
+            {report.model.model_name}
+          </Text>
         </View>
       </View>
     </View>

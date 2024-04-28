@@ -8,21 +8,21 @@ import {
   Image,
 } from "react-native";
 import { FontFamily, FontSize, Color } from "../GlobalStyles";
-import { useNavigation } from "@react-navigation/native";
 import { home_uri } from "../url";
-
-const PatientList = () => {
-  const [patients, setPatients] = useState([]);
+import { useNavigation } from "@react-navigation/native";
+const ReportList = () => {
+  const [reports, setReports] = useState([]);
   const navigation = useNavigation();
 
   const getData = async () => {
     try {
-      const response = await fetch(`${home_uri}/patients`);
+      const response = await fetch(`${home_uri}/reports`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      setPatients(data.patients);
+      JSON.stringify(data.reports);
+      setReports(data.reports);
     } catch (error) {
       console.log(error);
     }
@@ -41,41 +41,33 @@ const PatientList = () => {
         pagingEnabled={false}
         contentContainerStyle={styles.frameScrollViewContent}
       >
-        {patients &&
-          patients.map((patient) => (
-            <View
-              key={patient._id}
-              style={[styles.frameContainer, styles.frameBorder]}
-            >
-              <View
-                style={[styles.ellipseParent, styles.ellipseParentPosition]}
-              >
-                <Image
-                  style={styles.frameChild}
-                  source={require("../assets/men.png")}
-                />
-                <View style={styles.aaravRanaParent}>
-                  <Text style={[styles.aaravRana, styles.aaravRanaTypo]}>
-                    {patient.name}
-                  </Text>
-                  <Text style={[styles.years, styles.yearsLayout]}>
-                    {patient.age} years
-                  </Text>
-                </View>
+        {reports.map((report, index) => (
+          <View
+            key={report._id}
+            style={[styles.frameContainer, styles.frameBorder]}
+          >
+            <View style={[styles.ellipseParent, styles.ellipseParentPosition]}>
+              <Image
+                style={styles.frameChild}
+                source={require("../assets/report-icon.gif")}
+              />
+              <View style={styles.Parent}>
+                <Text style={[styles.idTypo]}>{"report " + (index + 1)}</Text>
+                <Text style={[styles.nameLayout]}>{report._id}</Text>
               </View>
-
-              <Pressable
-                onPress={() =>
-                  navigation.navigate("PatientDetails", { patient, patient })
-                }
-              >
-                <Image
-                  style={[styles.viewDetails, styles.viewLayout]}
-                  source={require("../assets/view-details1.png")}
-                />
-              </Pressable>
             </View>
-          ))}
+            <Pressable
+              onPress={() =>
+                navigation.navigate("ReportResults", { report, report })
+              }
+            >
+              <Image
+                style={[styles.viewDetails, styles.viewLayout]}
+                source={require("../assets/ViewReport.png")}
+              />
+            </Pressable>
+          </View>
+        ))}
       </ScrollView>
     </View>
   );
@@ -91,21 +83,23 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
   },
-  aaravRanaTypo: {
+  idTypo: {
     fontFamily: FontFamily.interSemiBold,
     fontWeight: "600",
     textAlign: "left",
+    fontSize: 15,
   },
-  yearsLayout: {
-    lineHeight: 21,
-    fontSize: FontSize.size_sm,
+  nameLayout: {
+    lineHeight: 25,
+    fontSize: 12,
   },
   viewLayout: {
-    height: 23,
-    width: 98,
+    height: 30,
+    width: 95,
     position: "absolute",
   },
   frameBorder: {
+    marginTop: 12,
     width: 335,
     borderBottomWidth: 1,
     borderColor: Color.colorWhitesmoke,
@@ -115,20 +109,9 @@ const styles = StyleSheet.create({
     width: 54,
     height: 54,
   },
-  aaravRana: {
-    color: Color.cOLORESGray4,
-    textAlign: "left",
-    lineHeight: 21,
-    fontSize: FontSize.size_sm,
-  },
-  years: {
-    fontFamily: FontFamily.interRegular,
-    color: Color.cOLORESGray6,
-    marginTop: 1,
-    textAlign: "left",
-  },
-  aaravRanaParent: {
-    marginLeft: 10,
+
+  Parent: {
+    marginLeft: 12,
   },
   ellipseParent: {
     flexDirection: "row",
@@ -137,20 +120,19 @@ const styles = StyleSheet.create({
   },
   viewDetails: {
     top: 15,
-    left: 238,
+    left: 240,
   },
   frameContainer: {
-    height: 75,
+    height: 73,
   },
   frameParent: {
     flex: 1,
   },
   patientListInner: {
-    flex: 1, // Occupy entire available space
+    flex: 1,
     top: 10,
   },
   patientList1: {
-    marginTop: 2,
     top: "60%",
     left: 69,
     fontSize: 20,
@@ -171,22 +153,25 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   topbar: {
-    marginLeft: -188,
-    left: "48%",
+    marginLeft: -195,
+    left: "50%",
     backgroundColor: "#429924",
     shadowColor: "rgba(0, 0, 0, 0.1)",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 0,
     },
     shadowRadius: 2,
-    elevation: 2,
+    elevation: 30,
+
     shadowOpacity: 1,
     width: 390,
     height: 120,
     top: 0,
     position: "absolute",
+
     overflow: "hidden",
+    flex: 1,
   },
   patientList: {
     borderRadius: 30,
@@ -198,4 +183,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PatientList;
+export default ReportList;

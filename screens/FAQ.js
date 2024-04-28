@@ -46,13 +46,6 @@ const FAQ = () => {
 
   return (
     <View style={styles.faq}>
-      <View style={styles.faqChild} />
-      <Image
-        style={styles.icroundArrowBackIcon}
-        source={require("../assets/icroundarrowback.png")}
-      />
-
-      <Text style={styles.faq1}>FAQ</Text>
       <Text style={styles.frequentlyAskedQuestions}>
         Frequently Asked Questions
       </Text>
@@ -135,7 +128,7 @@ const styles = StyleSheet.create({
   },
   frequentlyAskedQuestions: {
     position: "absolute",
-    top: "19.88%",
+    top: "2.1%",
     left: "22%",
     fontSize: 16,
     fontWeight: "500",
@@ -181,7 +174,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   questionContainer: {
-    top: 200,
+    top: 20,
     marginBottom: 25,
   },
 });
